@@ -218,3 +218,11 @@ a:visited {
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+
+/* Responsiveness */
+@media only screen and (max-width: 800px) {
+  body {
+    display: block;
+    padding: 0;
+  }
+}
