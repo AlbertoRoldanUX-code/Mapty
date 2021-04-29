@@ -19,10 +19,24 @@ if (navigator.geolocation)
       const { longitude } = position.coords;
       //Create link on google maps
       console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+
+      //Load the map and center it according to coords
+      const map = L.map('map').setView([latitude, longitude], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      //Marker
+      L.marker([latitude, longitude])
+        .addTo(map)
+        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        .openPopup();
     },
     function () {
       alert('Could not get your position');
     }
   );
 
-//Load the map and center it according to coords
+//Display a pop up and a marker wherever we click on the map
