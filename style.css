@@ -226,6 +226,10 @@ a:visited {
     padding: 0;
   }
 
+  .workouts {
+    height: auto;
+  }
+
   #map {
     height: 90vh;
   }
