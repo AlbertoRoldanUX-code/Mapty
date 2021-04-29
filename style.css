@@ -225,4 +225,8 @@ a:visited {
     display: block;
     padding: 0;
   }
+
+  #map {
+    height: 90vh;
+  }
 }
