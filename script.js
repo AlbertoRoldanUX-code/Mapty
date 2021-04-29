@@ -17,13 +17,12 @@ if (navigator.geolocation)
     function (position) {
       const { latitude } = position.coords;
       const { longitude } = position.coords;
+      //Create link on google maps
       console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
     },
     function () {
       alert('Could not get your position');
     }
   );
-
-//Create link on google maps
 
 //Load the map and center it according to coords
