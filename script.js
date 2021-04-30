@@ -31,6 +31,14 @@ if (navigator.geolocation)
       //Leaflet event listener
       map.on('click', function (mapEvent) {
         const { latlng } = mapEvent;
+
+        //////Render workout input form whenever the user clicks on the map
+        form.classList.remove('hidden');
+
+        //Immediately focus on Distance field
+        inputDistance.focus();
+
+        //Display a pop up and a marker wherever we click on the map
         L.marker(latlng)
           .addTo(map)
           .bindPopup(
@@ -52,4 +60,4 @@ if (navigator.geolocation)
     }
   );
 
-//Display a pop up and a marker wherever we click on the map
+form.addEventListener('submit');
