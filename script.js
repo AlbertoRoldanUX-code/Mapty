@@ -11,6 +11,9 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+//Create global variables so that I can access them inside the functions:
+let map, mapEvent;
+
 //Set Geolocation checking if it exists in the browser
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
@@ -21,37 +24,21 @@ if (navigator.geolocation)
       console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
       //Load the map and center it according to coords
-      const map = L.map('map').setView([latitude, longitude], 13);
+      map = L.map('map').setView([latitude, longitude], 13);
 
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
-      //Leaflet event listener
-      map.on('click', function (mapEvent) {
-        const { latlng } = mapEvent;
-
+      //Leaflet event listener (handling clicks on map)
+      map.on('click', function (mapE) {
+        mapEvent = mapE;
         //////Render workout input form whenever the user clicks on the map
         form.classList.remove('hidden');
 
         //Immediately focus on Distance field
         inputDistance.focus();
-
-        //Display a pop up and a marker wherever we click on the map
-        L.marker(latlng)
-          .addTo(map)
-          .bindPopup(
-            L.popup({
-              maxWidth: 250,
-              minWidth: 100,
-              autoClose: false,
-              closeOnClick: false,
-              className: 'running-popup',
-            })
-          )
-          .setPopupContent('Workout')
-          .openPopup();
       });
     },
     //Error callback
@@ -60,4 +47,21 @@ if (navigator.geolocation)
     }
   );
 
-form.addEventListener('submit');
+//Display marker when submitting the form
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const { latlng } = mapEvent;
+  L.marker(latlng)
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        maxWidth: 250,
+        minWidth: 100,
+        autoClose: false,
+        closeOnClick: false,
+        className: 'running-popup',
+      })
+    )
+    .setPopupContent('Workout')
+    .openPopup();
+});
