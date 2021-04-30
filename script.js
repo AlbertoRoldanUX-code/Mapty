@@ -50,6 +50,9 @@ if (navigator.geolocation)
 //Display marker when submitting the form
 form.addEventListener('submit', function (e) {
   e.preventDefault();
+  //Clearing input fields
+  inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
+    '';
   const { latlng } = mapEvent;
   L.marker(latlng)
     .addTo(map)
