@@ -68,3 +68,9 @@ form.addEventListener('submit', function (e) {
     .setPopupContent('Workout')
     .openPopup();
 });
+
+//Toggle hidden class between Cadence and Elevation when clicking on type
+inputType.addEventListener('change', function () {
+  inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+});
