@@ -113,6 +113,10 @@ class App {
   }
 
   _newWorkout(e) {
+    //Check if inputs are numbers
+    const validInputs = (...inputs) =>
+      inputs.every(inp => Number.isFinite(inp));
+
     e.preventDefault();
 
     //Get data from form
@@ -120,16 +124,21 @@ class App {
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
 
-    //Check if data is valid
-
     //If the workout is running, create running object
     if (type === 'running') {
       const cadence = +inputCadence.value;
+      //Check if data is valid
+      if (!validInputs(distance, duration, cadence))
+        return alert('Inputs have to be positive numbers!');
     }
     //If the workout is cycling, create cycling object
     if (type === 'cycling') {
       const elevation = +inputElevation.value;
+      //Check if data is valid
+      if (!validInputs(distance, duration, elevation))
+        return alert('Inputs have to be positive numbers!');
     }
+
     //Add new object to workout array
 
     //Render workout on map as a marker
@@ -164,6 +173,8 @@ const app = new App();
 //////1º Render workout on the map (next video)
 //////2º Render workout on the list (next video)
 
+//FOR TO-DO-LIST
+//////////////////////////////////////////
 // const number = 30;
 
 // const task = number + Number(recoger la mesa);
@@ -171,3 +182,9 @@ const app = new App();
 // const numbers = [12, 42, 43, 32, task, 32, 44, 5];
 
 // console.log(numbers.sort((a, b) => a - b));
+
+// //Check if data is valid
+// const validInputs = (...inputs) => inputs.every(inp => inp > 0);
+
+// if (!validInputs(distance, duration, cadence))
+//   return alert('Inputs have to be positive numbers!');
