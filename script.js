@@ -11,7 +11,7 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
-/////////Implement the rest of the classes
+//Implement the rest of the classes
 class Workout {
   data = new Date();
   id = (Date.now() + '').slice(-10);
@@ -114,9 +114,25 @@ class App {
 
   _newWorkout(e) {
     e.preventDefault();
-    //Clearing input fields
-    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
-      '';
+
+    //Get data from form
+    const type = inputType.value;
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+
+    //Check if data is valid
+
+    //If the workout is running, create running object
+    if (type === 'running') {
+      const cadence = +inputCadence.value;
+    }
+    //If the workout is cycling, create cycling object
+    if (type === 'cycling') {
+      const elevation = +inputElevation.value;
+    }
+    //Add new object to workout array
+
+    //Render workout on map as a marker
     const { latlng } = this.#mapEvent;
     L.marker(latlng)
       .addTo(this.#map)
@@ -131,6 +147,13 @@ class App {
       )
       .setPopupContent('Workout')
       .openPopup();
+    //Render workout on list
+
+    //Hide the form
+
+    //Clearing input fields
+    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
+      '';
   }
 }
 
@@ -138,3 +161,13 @@ class App {
 const app = new App();
 
 //////////////////Use classes to create workouts from the form
+//////1º Render workout on the map (next video)
+//////2º Render workout on the list (next video)
+
+// const number = 30;
+
+// const task = number + Number(recoger la mesa);
+
+// const numbers = [12, 42, 43, 32, task, 32, 44, 5];
+
+// console.log(numbers.sort((a, b) => a - b));
