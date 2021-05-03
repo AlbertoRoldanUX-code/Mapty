@@ -12,6 +12,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -26,6 +27,10 @@ class Workout {
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
+  }
+
+  click() {
+    this.clicks++;
   }
 }
 
@@ -69,9 +74,10 @@ class Cycling extends Workout {
 class App {
   //Use a private class field to define map and mapEvent as properties of the object
   #map;
+  #mapZoomLevel = 13;
   #mapEvent;
   //Create empty array for workouts
-  #workout = [];
+  #workouts = [];
 
   constructor() {
     //Call getPosition method to trigger Geolocation API as soon as a new object is created
@@ -82,6 +88,9 @@ class App {
 
     //Toggle hidden class between Cadence and Elevation when clicking on type
     inputType.addEventListener('change', this._toggleElevationField);
+
+    //Move the map to the position of the workout that was clicked on the sidebar
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -101,7 +110,7 @@ class App {
     const { longitude } = position.coords;
 
     //Load the map and center it according to coords
-    this.#map = L.map('map').setView([latitude, longitude], 13);
+    this.#map = L.map('map').setView([latitude, longitude], this.#mapZoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
@@ -179,13 +188,12 @@ class App {
     }
 
     //Add new object to workout array
-    this.#workout.push(workout);
+    this.#workouts.push(workout);
     console.log(workout);
 
     //Render workout on map as a marker
     this._renderWorkoutMarker(workout);
 
-    //////1º Render workout in the sidebar of the UI
     //Render workout on list
     this._renderWorkout(workout);
 
@@ -257,6 +265,26 @@ class App {
     </li>`;
 
     form.insertAdjacentHTML('afterend', html);
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+
+    //using public interface
+    workout.click();
   }
 }
 
