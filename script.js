@@ -83,6 +83,9 @@ class App {
     //Call getPosition method to trigger Geolocation API as soon as a new object is created
     this._getPosition();
 
+    //Get data from local storage
+    this._getLocalStorage();
+
     //Display marker when submitting the form
     form.addEventListener('submit', this._newWorkout.bind(this));
 
@@ -199,6 +202,9 @@ class App {
 
     //Hide the form and clear input fields
     this._hideForm();
+
+    //Set local storage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -286,9 +292,16 @@ class App {
     //using public interface
     workout.click();
   }
+
+  _setLocalStorage() {
+    localStorage.setItem('workout', JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workout'));
+    console.log(data);
+  }
 }
 
 //Create object
 const app = new App();
-
-//////Move the map to the workout location whenever we click on one of the workouts

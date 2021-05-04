@@ -226,6 +226,10 @@ a:visited {
     padding: 0;
   }
 
+  .sidebar {
+    padding: 1rem;
+  }
+
   .workouts {
     height: auto;
   }
