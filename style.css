@@ -238,6 +238,10 @@ a:visited {
     padding: 1rem;
   }
 
+  .workout {
+    padding: 1rem;
+  }
+
   .workouts {
     height: auto;
   }
