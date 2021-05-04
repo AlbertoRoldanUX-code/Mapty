@@ -122,6 +122,9 @@ class App {
 
     //Leaflet event listener (handling clicks on map)
     this.#map.on('click', this._showForm.bind(this));
+
+    //Render the markers
+    this.#workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
   _showForm(mapE) {
@@ -192,7 +195,6 @@ class App {
 
     //Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
 
     //Render workout on map as a marker
     this._renderWorkoutMarker(workout);
@@ -290,16 +292,31 @@ class App {
     });
 
     //using public interface
-    workout.click();
+    // workout.click();
   }
 
   _setLocalStorage() {
-    localStorage.setItem('workout', JSON.stringify(this.#workouts));
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
   }
 
   _getLocalStorage() {
-    const data = JSON.parse(localStorage.getItem('workout'));
-    console.log(data);
+    const data = JSON.parse(localStorage.getItem('workouts'));
+
+    //Don't do anything if there's no data
+    if (!data) return;
+
+    //Restore workouts array
+    this.#workouts = data;
+
+    //Render workouts in the list
+    this.#workouts.forEach(work => this._renderWorkout(work));
+  }
+
+  //Delete all workouts from local storage
+  reset() {
+    localStorage.removeItem('workouts');
+    //Reload the page
+    location.reload();
   }
 }
 
