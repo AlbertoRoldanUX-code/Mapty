@@ -226,6 +226,10 @@ a:visited {
     padding: 0;
   }
 
+  .form {
+    display: inline-table;
+  }
+
   .logo {
     margin-bottom: 2rem;
   }
