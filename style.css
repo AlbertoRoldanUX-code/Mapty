@@ -226,6 +226,10 @@ a:visited {
     padding: 0;
   }
 
+  .logo {
+    margin-bottom: 2rem;
+  }
+
   .sidebar {
     padding: 1rem;
   }
